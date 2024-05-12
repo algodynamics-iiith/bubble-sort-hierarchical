@@ -42,17 +42,19 @@ export default function Home() {
           <h2 className="text-xl">Brief about the tool</h2>
           <p className="py-3">
             This is an interactive game-like tool built around the
-            selection&nbsp;sort algorithm. No special preparation is required.
+            bubble&nbsp;sort algorithm. No special preparation is required.
           </p>
           <h2 className="text-xl">Time Required</h2>
-          <p className="py-3">The whole process might take around 15 minutes.</p>
+          <p className="py-3">The whole process might take around 10 minutes.</p>
           <h2 className="text-xl">Risks</h2>
           <p className="py-3">
             There is no risk for the participants. Participation in this survey is
-            completely voluntary. You can withdraw your consent to participate at
-            any time.
+            completely voluntary.
             {/* There is no risk for the participants. You can exit at any time. */}
           </p>
+          <p className="pb-3">
+            You can withdraw your consent to participate at any time by writing to the
+            point of contact mentioned below.</p>
           <h2 className="text-xl">Data Protection</h2>
           <p className="py-3">
             Your<strong>&nbsp;data will remain confidential&nbsp;</strong>and
@@ -61,7 +63,7 @@ export default function Home() {
             teaching. No direct identifiers (ex: name, address, photo, video) will
             be collected as part of the survey.
           </p>
-          <p className="py-3">
+          <p className="pb-3">
             You may refer to the following links for the policies of the services 
             used to run this tool, which involve storage of the experiment data collected.
           </p>
@@ -85,7 +87,7 @@ export default function Home() {
             etc.) is collected as part of the tool demonstration.
           </p> */}
           <h2 className="text-xl">Contact Information</h2>
-          <ol className="py-2">
+          <ol className="py-3">
             <li>
               <span>{nameOfPOC}</span>{(orgOfPOC !== "") && (<span>, {orgOfPOC}</span>)}
               <ol className="list-disc list-inside py-3">
@@ -94,10 +96,10 @@ export default function Home() {
               </ol>
             </li>
           </ol>
-          <p className="py-3">
-            Please click on the Start button below to start the tool.
+          <p className="pb-3">
+            Please click on the Agree button below to start the tool.
           </p>
-          <AgreeButton route="/level-zero" start />
+          <AgreeButton route="/level-zero" />
         </div>
       </div>
     </Layout>
