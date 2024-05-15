@@ -8,7 +8,7 @@ const supabase = createClient(
 )
 
 // Possible error codes.
-const ErrorCodes = Object.freeze({
+const StatusCodes = Object.freeze({
   OK: '0',
   NonExistentUser: '1',
   NonExistentRun: '2'
@@ -104,7 +104,7 @@ async function createRun(
   // Return error code for non-existent user.
   else {
     console.log('createRun', query.data, query.status, query.statusText)
-    return ErrorCodes.NonExistentUser
+    return StatusCodes.NonExistentUser
   }
 }
 
@@ -132,12 +132,12 @@ async function completeRun(runID: string) {
 
     console.log('runID completed:', response.data)
 
-    return ErrorCodes.OK
+    return StatusCodes.OK
   }
   // Return error code for non-existent run.
   else {
     console.log('completeRun', query.data, query.status, query.statusText)
-    return ErrorCodes.NonExistentRun
+    return StatusCodes.NonExistentRun
   }
 }
 
@@ -180,12 +180,12 @@ async function updateRun(
 
     console.log('runID updated:', response.data)
 
-    return ErrorCodes.OK
+    return StatusCodes.OK
   }
   // Return error code for non-existent run.
   else {
     console.log('updateRun', query)
-    return ErrorCodes.NonExistentRun
+    return StatusCodes.NonExistentRun
   }
 }
 
@@ -207,25 +207,37 @@ export default async function backendClient(
   actionName: string,
   actionType: string,
   actionParameters?: object,
-  preState?: any,
-  postState?: any
+  preState?: object,
+  postState?: object
 ) {
   let experiment = experimentID.split(' ').join('_')
 
+  // Initialisation.
   if (actionType === 'init' && userID === "") {
     // Create/Read userID.
     userID = await createUser(rollNumber)
     console.log(userID)
 
-    // Create runID
+    // Create runID.
     runID = await createRun(userID, experiment, initialState)
     console.log(runID)
   }
-  else if (actionType === 'submit') {
-    // Update runID to indicate completion
-    await completeRun(runID)
+  // Update the action.
+  let response = await updateRun(
+    runID,
+    actionName,
+    actionParameters,
+    preState,
+    postState
+  )
+  if (response !== StatusCodes.OK) {
+    console.log('updateRun status', response)
   }
-  // Update the action
-  let response = await updateRun(runID, actionName, actionParameters, preState, postState)
-  if (response !== ErrorCodes.OK) {console.log('updateRun status', response)}
+  // Completion.
+  if (actionType === 'submit') {
+    // Update runID to indicate completion.
+    await completeRun(runID)
+    userID = ""
+    runID = ""
+  }
 }
