@@ -1,3 +1,9 @@
+/**
+ * Backend Client v1.1
+ * Handler to store experiment data in the database.
+ * Database service: Supabase
+ */
+
 import { createClient } from '@supabase/supabase-js'
 import { nanoid } from '@reduxjs/toolkit'
 
@@ -145,6 +151,7 @@ async function completeRun(runID: string) {
  * Function to store a run action.
  * @param runID ID of the run.
  * @param actionName Name of the action.
+ * @param actionParameters (optional) Relevant parameters to the action.
  * @param preState (optional) State before the action.
  * @param postState (optional) State after the action.
  * @returns Status of updation.
@@ -152,9 +159,9 @@ async function completeRun(runID: string) {
 async function updateRun(
   runID: string,
   actionName: string,
-  actionParameters?: object,
-  preState?: object,
-  postState?: object
+  actionParameters: object,
+  preState: object,
+  postState: object
 ) {
   // Query if the runID exists.
   const query = await supabase
@@ -171,9 +178,9 @@ async function updateRun(
       .insert([{
         run_id: runID,
         action: actionName,
-        parameters: actionParameters ? actionParameters : {},
-        pre_state: preState ? preState : {},
-        post_state: postState ? postState : {},
+        parameters: actionParameters,
+        pre_state: preState,
+        post_state: postState,
         timestamp: new Date().toISOString()
       }])
       .select()
@@ -206,9 +213,9 @@ export default async function backendClient(
   initialState: object,
   actionName: string,
   actionType: string,
-  actionParameters?: object,
-  preState?: object,
-  postState?: object
+  actionParameters: object = {},
+  preState: object = {},
+  postState: object = {}
 ) {
   let experiment = experimentID.split(' ').join('_')
 

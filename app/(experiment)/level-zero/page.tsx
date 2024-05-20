@@ -305,7 +305,7 @@ export default function Experiment() {
   useEffect(() => {
     console.log("status:", levelState)
     const actionType = (type === Action.Init ? 'init' : (type === Action.ConfirmSubmit ? 'submit' : 'experiment'))
-    // backendClient(rollNumber, experimentName, initialLevelState.stateTimeline[0], type, actionType)
+    backendClient(rollNumber, experimentName, initialLevelState.stateTimeline[0], type, actionType)
     // Redirect to lower level upon clicking Dive In.
     if (type === Action.DiveIntoLevelOne) {
       router.replace("/level-one")

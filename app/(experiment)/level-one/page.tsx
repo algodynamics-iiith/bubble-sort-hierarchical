@@ -279,7 +279,7 @@ export default function Experiment() {
   // Log actions.
   useEffect(() => {
     console.log("status:", levelState)
-    // backendClient(rollNumber, experimentName, initialLevelState.stateTimeline[0], type, 'experiment')
+    backendClient(rollNumber, experimentName, initialLevelState.stateTimeline[0], type, 'experiment')
     // Redirect to lower level upon clicking Dive In Find Max.
     if (type === Action.DiveIntoLevelTwo) {
       router.replace("/level-two")
