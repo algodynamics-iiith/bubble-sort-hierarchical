@@ -304,6 +304,7 @@ export default function Experiment() {
   // Log actions.
   useEffect(() => {
     console.log("status:", levelState)
+    console.log("L0 rollNumber:", rollNumber)
     const actionType = (type === Action.Init ? 'init' : (type === Action.ConfirmSubmit ? 'submit' : 'experiment'))
     backendClient(rollNumber, experimentName, initialLevelState.stateTimeline[0], type, actionType)
     // Redirect to lower level upon clicking Dive In.

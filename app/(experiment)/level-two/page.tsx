@@ -269,6 +269,7 @@ export default function Experiment() {
   // Log actions.
   useEffect(() => {
     console.log("status:", levelState)
+    console.log("L2 rollNumber:", rollNumber)
     backendClient(rollNumber, experimentName, initialLevelState.stateTimeline[0], type, 'experiment', undefined, preState, state)
     // Redirect upon completion.
     if (completed) {
